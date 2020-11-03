@@ -12,9 +12,6 @@ const get = async (route) => {
 const post = async (route, data) => {
   try {
     const response = await instance.post(route, {
-      headers: {
-        "Content-Type": "application/json",
-      },
       ...data,
     });
 

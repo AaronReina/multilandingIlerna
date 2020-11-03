@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 import { dispatcher } from "./redux/actions/dispatchers";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ColorPickerModal from "./components/modals/ColorPickerModal";
+import TextModal from "./components/modals/TextModal";
 import "./App.css";
+import UploadModal from "./components/modals/UploadModal";
 
 const App = ({
   getColors,
@@ -34,6 +36,7 @@ const App = ({
 
   return (
     <div>
+      {images && <img src={`data:image;base64,${images[0].image}`} />}
       {componentReady ? (
         <div>
           <Header />
@@ -43,8 +46,16 @@ const App = ({
         <CircularProgress />
       )}
       {modal?.type === "color" && <ColorPickerModal id={modal?.id} />}
-      <button onClick={() => console.log(state)}>fsdfsadfsadfasdf</button>
-      <button onClick={() => openModals({ type: "color", id: 0 })}>hola</button>
+      {modal?.type === "text" && <TextModal id={modal?.id} />}
+      {modal?.type === "upload" && <UploadModal id={modal?.id} />}
+
+      <button onClick={() => openModals({ type: "color", id: 0 })}>
+        color
+      </button>
+      <button onClick={() => openModals({ type: "text", id: 0 })}>texto</button>
+      <button onClick={() => openModals({ type: "upload", id: 0 })}>
+        upload
+      </button>
     </div>
   );
 };

@@ -12,7 +12,6 @@ import {
   IconButton,
   Hidden,
 } from "@material-ui/core";
-import ColorPicker from "./ColorPicker";
 
 const Header = ({ colors }) => {
   const useStyles = makeStyles({

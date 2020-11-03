@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { SketchPicker } from "react-color";
 import { connect } from "react-redux";
-import { dispatcher } from "./../../redux/actions/dispatchers";
+import { dispatcher } from "../../redux/actions/dispatchers";
 import { Paper, makeStyles } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { post } from "../../services/calls";
-const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+const ColorPickerModal = ({ text, id, closeModals }) => {
   const useStyles = makeStyles({
     button: {
       padding: "5px 25px",
@@ -15,21 +17,7 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
       borderRadius: "5px",
       cursor: "pointer",
     },
-    paper: {
-      width: "250px",
-      height: "400px",
-      display: "flex",
-      justifyContent: "space-around",
-      alignItems: "center",
-      flexDirection: "column",
-      position: "absolute",
-      borderRadius: "5px",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      margin: "auto",
-    },
+
     cancelBox: {
       width: "100%",
       display: "flex",
@@ -42,22 +30,16 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
     },
   });
   const classes = useStyles();
-  const [precolor, setPrecolor] = useState(null);
-  useEffect(() => setPrecolor(colors), []);
 
-  const changeColors = (element) => {
-    const reColor = JSON.parse(JSON.stringify(colors));
-    reColor[id].color = element.hex;
-    addColor(reColor);
-  };
+  const [localText, setLocalText] = useState(text && text[id]?.htmlText);
 
-  const saveColors = async () => {
+  const saveText = async () => {
     try {
       const dataCall = {
         id: id + 1,
-        color: colors[id].color,
+        htmlText: localText,
       };
-      const response = await post("changeColors", dataCall);
+      const response = await post("changeText", dataCall);
       if (response?.ok) {
         closeModals();
       }
@@ -67,25 +49,45 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
   };
 
   const cancel = () => {
-    addColor(precolor);
     closeModals();
   };
 
   return (
-    <Paper className={classes.paper} elevation={15}>
+    <div>
       <div className={classes.cancelBox}>
         <Close className={classes.cancel} onClick={() => cancel()} />
       </div>
-      <SketchPicker color={colors[id].color} onChangeComplete={changeColors} />
-      <button className={classes.button} onClick={() => saveColors()}>
+      <h2>Editor de contenidos</h2>
+      <div className="App">
+        <CKEditor
+          editor={ClassicEditor}
+          data={localText}
+          onReady={(editor) => {
+            // You can store the "editor" and use when it is needed.
+            console.log("Editor is ready to use!", editor);
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            setLocalText(data);
+            console.log({ event, editor, data });
+          }}
+          onBlur={(event, editor) => {
+            console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            console.log("Focus.", editor);
+          }}
+        />
+      </div>
+      <button className={classes.button} onClick={() => saveText()}>
         Guardar
       </button>
-    </Paper>
+    </div>
   );
 };
 
 const mapStateToProps = (store) => ({
-  colors: store.data.colors,
+  text: store.data.text,
 });
 
 const mapDispatch = dispatcher(["addColor", "closeModals"]);
