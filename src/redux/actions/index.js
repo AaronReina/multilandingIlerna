@@ -1,8 +1,7 @@
 import { get } from "./../../services/calls";
 
-export const setToken = (token) => ({ type: "SET_TOKEN", token });
+export const setRol = (rol) => ({ type: "SET_ROL", rol });
 export const logOut = () => ({ type: "LOG_OUT", undefined });
-export const decodedToken = (decoded) => ({ type: "DECODED_TOKEN", decoded });
 export const removeInfo = () => ({ type: "REMOVE_INFO" });
 export const addColor = (colors) => ({ type: "ADD_COLORS", data: colors });
 export const closeModals = () => ({ type: "CLOSE_MODAL" });

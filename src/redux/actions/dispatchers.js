@@ -2,8 +2,7 @@ import {
   logOut,
   getColors,
   removeInfo,
-  setToken,
-  decodedToken,
+  setRol,
   getText,
   getImages,
   addColor,
@@ -40,12 +39,8 @@ export const dispatcher = (actions) => {
         case "removeInfo":
           dispatcher.removeInfo = () => dispatch(removeInfo());
           break;
-        case "setToken":
-          dispatcher.setToken = (token) => dispatch(setToken(token));
-          break;
-        case "decodedToken":
-          dispatcher.decodedToken = (decoded) =>
-            dispatch(decodedToken(decoded));
+        case "setRol":
+          dispatcher.setRol = (token) => dispatch(setRol(token));
           break;
         default:
           break;

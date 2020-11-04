@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
+import ColorPickerButton from "./ColoPickerButton";
 import { connect } from "react-redux";
 import { dispatcher } from "./../redux/actions/dispatchers";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -58,14 +59,14 @@ const Header = ({ colors }) => {
               </Link>
             </Typography>
           </div>
-
+          <ColorPickerButton id="1" />
           <div className={classes.headerBoxRoutes}>
             <Hidden smDown>
-              <Link className={classes.link} to="/contacto">
-                Contacto
-              </Link>
               <Link className={classes.link} to="/galeria">
                 Galeria
+              </Link>
+              <Link className={classes.link} to="/contacto">
+                Contacto
               </Link>
             </Hidden>
           </div>

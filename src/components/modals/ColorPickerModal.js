@@ -22,13 +22,11 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
       justifyContent: "space-around",
       alignItems: "center",
       flexDirection: "column",
-      position: "absolute",
       borderRadius: "5px",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      margin: "auto",
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
     },
     cancelBox: {
       width: "100%",
@@ -47,15 +45,15 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
 
   const changeColors = (element) => {
     const reColor = JSON.parse(JSON.stringify(colors));
-    reColor[id].color = element.hex;
+    reColor[id - 1].color = element.hex;
     addColor(reColor);
   };
 
   const saveColors = async () => {
     try {
       const dataCall = {
-        id: id + 1,
-        color: colors[id].color,
+        id: id,
+        color: colors[id - 1].color,
       };
       const response = await post("changeColors", dataCall);
       if (response?.ok) {
@@ -76,7 +74,10 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
       <div className={classes.cancelBox}>
         <Close className={classes.cancel} onClick={() => cancel()} />
       </div>
-      <SketchPicker color={colors[id].color} onChangeComplete={changeColors} />
+      <SketchPicker
+        color={colors[id - 1].color}
+        onChangeComplete={changeColors}
+      />
       <button className={classes.button} onClick={() => saveColors()}>
         Guardar
       </button>

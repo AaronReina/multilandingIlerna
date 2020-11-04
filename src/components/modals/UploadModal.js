@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { dispatcher } from "./../../redux/actions/dispatchers";
 import { Paper, TextField, makeStyles } from "@material-ui/core";
 
-const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
+const UploadModal = ({ closeModals, id, getImages }) => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const onFileChange = (event) => {
@@ -23,13 +23,14 @@ const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
     try {
       const response = await postFile("changeImage", formData);
       if (!response.error) {
-        recall();
+        getImages();
         reset();
       }
     } catch (e) {
       console.log(e);
     }
   };
+
   const reset = () => {
     setFile(null);
     setName("");
@@ -44,13 +45,11 @@ const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
       justifyContent: "space-around",
       alignItems: "center",
       flexDirection: "column",
-      position: "absolute",
       borderRadius: "5px",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      margin: "auto",
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
     },
     container: {
       display: "flex",
@@ -73,6 +72,7 @@ const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
     },
 
     iconBox: {
+      margin: "10px",
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
@@ -126,6 +126,10 @@ const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
       textDecoration: "none",
       textShadow: "0px -1px 0px #b23e35",
     },
+    cloud: {
+      color: "blue",
+      cursor: "pointer",
+    },
   });
   const classes = useStyles();
 
@@ -173,12 +177,10 @@ const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
               </div>
             ) : (
               <div>
-                <label for="file-input" className="pointer">
-                  <CloudQueue
-                    title="Buscar archivo"
-                    size={75}
-                    color={"#007bff"}
-                  />
+                <label htmlFor="file-input" className="pointer">
+                  <span className={classes.cloud}>
+                    <CloudQueue title="Buscar archivo" size={75} />
+                  </span>
                 </label>
                 <input
                   className={classes.uploadInput}
@@ -200,6 +202,6 @@ const UploadModal = ({ closeModals, uploadDocument, recall, id }) => {
   );
 };
 
-const mapDispatch = dispatcher(["closeModals"]);
+const mapDispatch = dispatcher(["closeModals", "getImages"]);
 
 export default connect(null, mapDispatch)(UploadModal);
