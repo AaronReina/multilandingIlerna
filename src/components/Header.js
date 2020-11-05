@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import ColorPickerButton from "./ColoPickerButton";
@@ -12,12 +12,17 @@ import {
   Toolbar,
   IconButton,
   Hidden,
+  ListItem,
+  ListItemText,
+  Drawer,
+  List,
 } from "@material-ui/core";
 
-const Header = ({ colors }) => {
+const Header = ({ colors, text, rol }) => {
+  const [mobileMenu, setMobileMenu] = useState(false);
   const useStyles = makeStyles({
     headerBoxTitle: {
-      width: "50%",
+      width: "100%",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -35,6 +40,9 @@ const Header = ({ colors }) => {
     navColor: {
       background: colors[0].color,
     },
+    paper: {
+      background: colors[3].color,
+    },
   });
   const classes = useStyles();
 
@@ -48,28 +56,74 @@ const Header = ({ colors }) => {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
+              onClick={() => setMobileMenu(true)}
             >
               <MenuIcon />
             </IconButton>
+            <React.Fragment>
+              <Drawer
+                classes={{ paper: classes.paper }}
+                open={mobileMenu}
+                onClose={() => setMobileMenu(false)}
+              >
+                <List>
+                  <ListItem button key={"inicio"} component={Link} to="/">
+                    <ListItemText primary={text[0].htmlText} />
+                  </ListItem>
+                  <ListItem
+                    button
+                    key={"galeria"}
+                    component={Link}
+                    to="/galeria"
+                  >
+                    <ListItemText primary="Galeria" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    key={"Contacto"}
+                    component={Link}
+                    to="/contacto"
+                  >
+                    <ListItemText primary="Contacto" />
+                  </ListItem>
+                  {rol && (
+                    <ListItem
+                      button
+                      key={"Configuracion"}
+                      component={Link}
+                      to="/configuracion"
+                    >
+                      <ListItemText primary="Configuracion" />
+                    </ListItem>
+                  )}
+                </List>
+                <ColorPickerButton id="4" />
+              </Drawer>
+            </React.Fragment>
           </Hidden>
           <div className={classes.headerBoxTitle}>
-            <Typography color="secondary" variant="h6">
+            <Typography variant="h5">
               <Link className={classes.link} to="/">
-                Inicio
+                {text[0].htmlText}
               </Link>
             </Typography>
           </div>
           <ColorPickerButton id="1" />
-          <div className={classes.headerBoxRoutes}>
-            <Hidden smDown>
+          <Hidden smDown>
+            <div className={classes.headerBoxRoutes}>
               <Link className={classes.link} to="/galeria">
                 Galeria
               </Link>
               <Link className={classes.link} to="/contacto">
                 Contacto
               </Link>
-            </Hidden>
-          </div>
+              {/* {rol && ( */}
+              <Link className={classes.link} to="/configuracion">
+                Configuracion
+              </Link>
+              {/* )} */}
+            </div>
+          </Hidden>
         </Toolbar>
       </AppBar>
     </div>
@@ -78,7 +132,8 @@ const Header = ({ colors }) => {
 
 const mapStateToProps = (store) => ({
   colors: store.data.colors,
-  token: store.auth.token,
+  text: store.data.text,
+  rol: store.auth.rol,
 });
 
 const mapDispatch = dispatcher(["getColors", "getText", "getImages"]);

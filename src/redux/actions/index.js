@@ -39,3 +39,14 @@ export const getImages = () => {
     }
   };
 };
+
+export const getConfig = () => {
+  return async (dispatch) => {
+    const response = await get("config");
+    if (response) {
+      dispatch({ type: "ADD_CONFIG", data: response });
+    } else {
+      dispatch({ type: "ERROR", state: true });
+    }
+  };
+};

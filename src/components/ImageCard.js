@@ -6,11 +6,10 @@ import CardContent from "@material-ui/core/CardContent";
 import ColorPickerButton from "./ColoPickerButton";
 import { connect } from "react-redux";
 import { dispatcher } from "./../redux/actions/dispatchers";
-import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const ImageCard = ({ image, info, id, openModals, colors }) => {
+const ImageCard = ({ rol, image, info, id, openModals, colors }) => {
   const useStyles = makeStyles({
     zoom: {
       transition: "transform .2s",
@@ -37,7 +36,7 @@ const ImageCard = ({ image, info, id, openModals, colors }) => {
       <img
         onClick={() => {
           if (window.innerWidth > 600) {
-            openModals({ type: "fullImage", id: id });
+            openModals({ type: "fullImage", id });
           }
         }}
         className={classes.img}
@@ -49,23 +48,25 @@ const ImageCard = ({ image, info, id, openModals, colors }) => {
           {info}
         </Typography>
       </CardContent>
-      <CardActions className={classes.background}>
-        <Button
-          onClick={() => openModals({ type: "upload", id: id })}
-          size="small"
-          color="secondary"
-        >
-          Cambiar
-        </Button>
-        <ColorPickerButton id="2" />
-      </CardActions>
+      {rol && (
+        <CardActions className={classes.background}>
+          <Button
+            onClick={() => openModals({ type: "upload", id })}
+            size="small"
+            color="secondary"
+          >
+            Cambiar
+          </Button>
+          <ColorPickerButton id="2" />
+        </CardActions>
+      )}
     </Card>
   );
 };
 
 const mapStateToProps = (store) => ({
   colors: store.data.colors,
-  token: store.auth.token,
+  rol: store.auth.rol,
 });
 
 const mapDispatch = dispatcher(["getColors", "getText", "getImages"]);

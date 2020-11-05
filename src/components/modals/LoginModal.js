@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { dispatcher } from "../../redux/actions/dispatchers";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button } from "@material-ui/core";
+import { post } from "../../services/calls";
 
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -28,11 +29,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginModal = ({ rol, closeModals }) => {
+const LoginModal = ({ rol, closeModals, setRol }) => {
   const classes = useStyles();
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const handleClose = () => {
     closeModals();
+  };
+  const login = async () => {
+    const dataCall = {
+      password,
+      username,
+    };
+    try {
+      const response = await post("login", dataCall);
+      if (response.ok) {
+        console.log(response.access);
+        setRol(response.access);
+        closeModals();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -49,9 +68,22 @@ const LoginModal = ({ rol, closeModals }) => {
       >
         <Fade in={true}>
           <div className={classes.paper}>
-            <TextField id="user" label="Usuario" defaultValue="" />
-            <TextField id="password" label="Contraseña" defaultValue="" />
-            <Button color="primary">Ingresar</Button>
+            <TextField
+              onChange={(e) => setUsername(e.target.value)}
+              id="user"
+              label="Usuario"
+              value={username}
+            />
+            <TextField
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              type="password"
+              label="Contraseña"
+              value={password}
+            />
+            <Button onClick={() => login()} color="primary">
+              Ingresar
+            </Button>
           </div>
         </Fade>
       </Modal>
@@ -63,6 +95,6 @@ const mapStateToProps = (store) => ({
   rol: store.auth.rol,
 });
 
-const mapDispatch = dispatcher(["closeModals"]);
+const mapDispatch = dispatcher(["closeModals", "setRol"]);
 
 export default connect(mapStateToProps, mapDispatch)(LoginModal);

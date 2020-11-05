@@ -2,12 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { dispatcher } from "./../redux/actions/dispatchers";
-const Contacto = ({ token, store, openModals }) => {
-  useEffect(() => {
-    console.log(token);
-    console.log(store);
-  }, [token, store]);
-
+const Contacto = ({ openModals }) => {
   const useStyles = makeStyles({
     hideButton: {
       width: "5vh",
@@ -30,11 +25,8 @@ const Contacto = ({ token, store, openModals }) => {
   );
 };
 
-const mapStateToProps = (store) => ({
-  store: store,
-  token: store.auth.token,
-});
+const mapStateToProps = (store) => ({});
 
-const mapDispatch = dispatcher(["addInfo", "setToken", "openModals"]);
+const mapDispatch = dispatcher(["openModals"]);
 
 export default connect(mapStateToProps, mapDispatch)(Contacto);

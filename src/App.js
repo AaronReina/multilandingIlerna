@@ -16,10 +16,11 @@ const App = ({
   getColors,
   getText,
   getImages,
+  getConfig,
+  config,
   colors,
   text,
   images,
-  openModals,
   modal,
 }) => {
   const [componentReady, setComponentReady] = useState(false);
@@ -35,28 +36,18 @@ const App = ({
     },
   });
   const classes = useStyles();
-
-  // const algo = () => {
-  //   var link =
-  //     document.querySelector("link[rel*='icon']") ||
-  //     document.createElement("link");
-  //   link.type = "image/x-icon";
-  //   link.rel = "shortcut icon";
-  //   link.href = "http://www.stackoverflow.com/favicon.ico";
-  //   document.getElementsByTagName("head")[0].appendChild(link);
-  // };
   useEffect(() => {
-    // algo();
     getColors();
     getImages();
     getText();
+    getConfig();
   }, []);
 
   useEffect(() => {
-    if (colors && text && images) {
+    if (colors && text && images && config) {
       setComponentReady(true);
     }
-  }, [colors, text, images]);
+  }, [colors, text, images, config]);
 
   return (
     <div style={{ height: "100%" }}>
@@ -85,8 +76,6 @@ const App = ({
       {modal?.type === "upload" && <UploadModal id={modal?.id} />}
       {modal?.type === "fullImage" && <FullImageModal id={modal?.id} />}
       {modal?.type === "login" && <LoginModal />}
-
-      {/* <button onClick={() => openModals({ type: "text", id: 0 })}>texto</button> */}
     </div>
   );
 };
@@ -95,6 +84,7 @@ const mapStateToProps = (store) => ({
   colors: store.data.colors,
   text: store.data.text,
   images: store.data.images,
+  config: store.data.config,
   modal: store.modal,
   state: store,
 });
@@ -102,6 +92,7 @@ const mapDispatch = dispatcher([
   "getColors",
   "getText",
   "getImages",
+  "getConfig",
   "openModals",
 ]);
 

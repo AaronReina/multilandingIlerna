@@ -9,6 +9,9 @@ export default (state = {}, action) => {
     case "ADD_IMAGES":
       state = { ...state, images: action.data };
       break;
+    case "ADD_CONFIG":
+      state = { ...state, config: action.data[0].config };
+      break;
     case "ERROR":
       state = { ...state, data: action.data };
       break;

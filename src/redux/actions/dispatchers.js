@@ -5,6 +5,7 @@ import {
   setRol,
   getText,
   getImages,
+  getConfig,
   addColor,
   closeModals,
   openModals,
@@ -36,11 +37,14 @@ export const dispatcher = (actions) => {
         case "getImages":
           dispatcher.getImages = () => dispatch(getImages());
           break;
+        case "getConfig":
+          dispatcher.getConfig = () => dispatch(getConfig());
+          break;
         case "removeInfo":
           dispatcher.removeInfo = () => dispatch(removeInfo());
           break;
         case "setRol":
-          dispatcher.setRol = (token) => dispatch(setRol(token));
+          dispatcher.setRol = (rol) => dispatch(setRol(rol));
           break;
         default:
           break;
