@@ -45,7 +45,6 @@ const LoginModal = ({ rol, closeModals, setRol }) => {
     try {
       const response = await post("login", dataCall);
       if (response.ok) {
-        console.log(response.access);
         setRol(response.access);
         closeModals();
       }

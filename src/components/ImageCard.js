@@ -9,7 +9,7 @@ import { dispatcher } from "./../redux/actions/dispatchers";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const ImageCard = ({ rol, image, info, id, openModals, colors }) => {
+const ImageCard = ({ rol, image, info, id, openModals, colors, config }) => {
   const useStyles = makeStyles({
     zoom: {
       transition: "transform .2s",
@@ -28,6 +28,7 @@ const ImageCard = ({ rol, image, info, id, openModals, colors }) => {
     },
     background: {
       backgroundColor: colors[1]?.color,
+      color: config.cardText ? "white" : "black",
     },
   });
   const classes = useStyles();
@@ -44,7 +45,7 @@ const ImageCard = ({ rol, image, info, id, openModals, colors }) => {
         title={info}
       />
       <CardContent className={classes.background}>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" component="p">
           {info}
         </Typography>
       </CardContent>
@@ -65,6 +66,7 @@ const ImageCard = ({ rol, image, info, id, openModals, colors }) => {
 };
 
 const mapStateToProps = (store) => ({
+  config: store.data.config,
   colors: store.data.colors,
   rol: store.auth.rol,
 });

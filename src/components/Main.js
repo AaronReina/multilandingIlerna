@@ -1,16 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
+import { dispatcher } from "./../redux/actions/dispatchers";
 import { Switch, Route } from "react-router-dom";
 import Contacto from "./../views/Contacto";
 import Configuracion from "./../views/Configuracion";
 import Galeria from "./../views/Galeria";
 import Inicio from "./../views/Inicio";
 
-const Main = () => (
+const Main = ({ config }) => (
   <Switch>
     <Route exact path="/" component={Inicio} />
-    <Route path="/galeria" component={Galeria} />
+    {config?.galleryOn && <Route path="/galeria" component={Galeria} />}{" "}
     <Route path="/contacto" component={Contacto} />
     <Route path="/configuracion" component={Configuracion} />
   </Switch>
 );
-export default Main;
+
+const mapStateToProps = (store) => ({
+  config: store.data.config,
+});
+
+export default connect(mapStateToProps)(Main);

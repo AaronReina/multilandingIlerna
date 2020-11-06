@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import ColorPickerButton from "./ColoPickerButton";
@@ -18,7 +18,7 @@ import {
   List,
 } from "@material-ui/core";
 
-const Header = ({ colors, text, rol }) => {
+const Header = ({ colors, text, rol, config }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const useStyles = makeStyles({
     headerBoxTitle: {
@@ -35,13 +35,16 @@ const Header = ({ colors, text, rol }) => {
     },
     link: {
       textDecoration: "none",
-      color: "white",
+      color: config.menuText ? "white" : "black",
     },
     navColor: {
       background: colors[0].color,
     },
     paper: {
       background: colors[3].color,
+    },
+    menuButton: {
+      color: config.menuText ? "white" : "black",
     },
   });
   const classes = useStyles();
@@ -60,29 +63,39 @@ const Header = ({ colors, text, rol }) => {
             >
               <MenuIcon />
             </IconButton>
-            <React.Fragment>
+            <Fragment>
               <Drawer
                 classes={{ paper: classes.paper }}
                 open={mobileMenu}
                 onClose={() => setMobileMenu(false)}
               >
                 <List>
-                  <ListItem button key={"inicio"} component={Link} to="/">
-                    <ListItemText primary={text[0].htmlText} />
-                  </ListItem>
                   <ListItem
                     button
-                    key={"galeria"}
+                    key={"inicio"}
                     component={Link}
-                    to="/galeria"
+                    to="/"
+                    className={classes.link}
                   >
-                    <ListItemText primary="Galeria" />
+                    <ListItemText primary={config.title} />
                   </ListItem>
+                  {config?.galleryOn && (
+                    <ListItem
+                      button
+                      key={"galeria"}
+                      component={Link}
+                      to="/galeria"
+                      className={classes.link}
+                    >
+                      <ListItemText primary="Galeria" />
+                    </ListItem>
+                  )}
                   <ListItem
                     button
                     key={"Contacto"}
                     component={Link}
                     to="/contacto"
+                    className={classes.link}
                   >
                     <ListItemText primary="Contacto" />
                   </ListItem>
@@ -92,6 +105,7 @@ const Header = ({ colors, text, rol }) => {
                       key={"Configuracion"}
                       component={Link}
                       to="/configuracion"
+                      className={classes.link}
                     >
                       <ListItemText primary="Configuracion" />
                     </ListItem>
@@ -99,29 +113,31 @@ const Header = ({ colors, text, rol }) => {
                 </List>
                 <ColorPickerButton id="4" />
               </Drawer>
-            </React.Fragment>
+            </Fragment>
           </Hidden>
           <div className={classes.headerBoxTitle}>
             <Typography variant="h5">
               <Link className={classes.link} to="/">
-                {text[0].htmlText}
+                {config.title}
               </Link>
             </Typography>
           </div>
           <ColorPickerButton id="1" />
           <Hidden smDown>
             <div className={classes.headerBoxRoutes}>
-              <Link className={classes.link} to="/galeria">
-                Galeria
-              </Link>
+              {config?.galleryOn && (
+                <Link className={classes.link} to="/galeria">
+                  Galeria
+                </Link>
+              )}
               <Link className={classes.link} to="/contacto">
                 Contacto
               </Link>
-              {/* {rol && ( */}
-              <Link className={classes.link} to="/configuracion">
-                Configuracion
-              </Link>
-              {/* )} */}
+              {rol && (
+                <Link className={classes.link} to="/configuracion">
+                  Configuracion
+                </Link>
+              )}
             </div>
           </Hidden>
         </Toolbar>
@@ -132,9 +148,9 @@ const Header = ({ colors, text, rol }) => {
 
 const mapStateToProps = (store) => ({
   colors: store.data.colors,
+  config: store.data.config,
   text: store.data.text,
   rol: store.auth.rol,
 });
 
-const mapDispatch = dispatcher(["getColors", "getText", "getImages"]);
-export default connect(mapStateToProps, mapDispatch)(Header);
+export default connect(mapStateToProps)(Header);

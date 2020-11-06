@@ -11,6 +11,7 @@ import UploadModal from "./components/modals/UploadModal";
 import FullImageModal from "./components/modals/FullImageModal";
 import { Helmet } from "react-helmet";
 import LoginModal from "./components/modals/LoginModal";
+import EnConstruccion from "./views/EnConstruccion";
 
 const App = ({
   getColors,
@@ -22,6 +23,7 @@ const App = ({
   text,
   images,
   modal,
+  rol,
 }) => {
   const [componentReady, setComponentReady] = useState(false);
   const useStyles = makeStyles({
@@ -52,20 +54,36 @@ const App = ({
   return (
     <div style={{ height: "100%" }}>
       {componentReady ? (
-        <div>
-          <Helmet>
-            <meta charSet="utf-8" />
-            <title>{text[0].htmlText}</title>
-            <link
-              rel="icon"
-              type="image/png"
-              href={`data:image/x-icon;base64,${images[10].image}`}
-              sizes="16x16"
-            />
-          </Helmet>
-          <Header />
-          <Main />
-        </div>
+        config?.onConstruction && !rol ? (
+          <div>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>En contrucción</title>
+              <link
+                rel="icon"
+                type="image/png"
+                href={`data:image/x-icon;base64,${images[10].image}`}
+                sizes="16x16"
+              />
+            </Helmet>
+            <EnConstruccion />
+          </div>
+        ) : (
+          <div>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>{config.title}</title>
+              <link
+                rel="icon"
+                type="image/png"
+                href={`data:image/x-icon;base64,${images[10].image}`}
+                sizes="16x16"
+              />
+            </Helmet>
+            <Header />
+            <Main />
+          </div>
+        )
       ) : (
         <div className={classes.circularProgressBox}>
           <CircularProgress size={100} />
@@ -85,8 +103,8 @@ const mapStateToProps = (store) => ({
   text: store.data.text,
   images: store.data.images,
   config: store.data.config,
+  rol: store.auth.rol,
   modal: store.modal,
-  state: store,
 });
 const mapDispatch = dispatcher([
   "getColors",

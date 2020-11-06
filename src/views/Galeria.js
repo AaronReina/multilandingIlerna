@@ -4,7 +4,7 @@ import ImageCard from "../components/ImageCard";
 import ColorPickerButton from "../components/ColoPickerButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { dispatcher } from "./../redux/actions/dispatchers";
-const Galeria = ({ images, openModals, colors }) => {
+const Galeria = ({ images, openModals, colors, config }) => {
   const useStyles = makeStyles({
     cardBox: {
       display: "flex",
@@ -13,6 +13,7 @@ const Galeria = ({ images, openModals, colors }) => {
     },
     container: {
       backgroundColor: colors[2].color,
+      minHeight: "94vh",
     },
     pickerContainer: {
       display: "flex",
@@ -30,7 +31,7 @@ const Galeria = ({ images, openModals, colors }) => {
       <div className={classes.cardBox}>
         {images &&
           images.map((e, i) => {
-            if (i > 9) {
+            if (i > config.cardsNumber - 1) {
               return;
             }
             return (
@@ -50,6 +51,7 @@ const Galeria = ({ images, openModals, colors }) => {
 
 const mapStateToProps = (store) => ({
   images: store.data.images,
+  config: store.data.config,
   colors: store.data.colors,
 });
 
