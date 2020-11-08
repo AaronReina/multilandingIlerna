@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { SketchPicker } from "react-color";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { dispatcher } from "../../redux/actions/dispatchers";
-import { Paper, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { post } from "../../services/calls";
 import { CKEditor } from "@ckeditor/ckeditor5-react";

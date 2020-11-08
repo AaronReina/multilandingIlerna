@@ -35,6 +35,7 @@ const ImageCard = ({ rol, image, info, id, openModals, colors, config }) => {
   return (
     <Card className={classes.zoom}>
       <img
+        alt={`Imagen ${info}`}
         onClick={() => {
           if (window.innerWidth > 600) {
             openModals({ type: "fullImage", id });

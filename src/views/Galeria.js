@@ -32,7 +32,7 @@ const Galeria = ({ images, openModals, colors, config }) => {
         {images &&
           images.map((e, i) => {
             if (i > config.cardsNumber - 1) {
-              return;
+              return false;
             }
             return (
               <ImageCard

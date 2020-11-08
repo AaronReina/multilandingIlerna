@@ -41,7 +41,10 @@ const ColorPickerModal = ({ colors, id, addColor, closeModals }) => {
   });
   const classes = useStyles();
   const [precolor, setPrecolor] = useState(null);
-  useEffect(() => setPrecolor(colors), []);
+
+  useEffect(() => {
+    setPrecolor(colors); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const changeColors = (element) => {
     const reColor = JSON.parse(JSON.stringify(colors));

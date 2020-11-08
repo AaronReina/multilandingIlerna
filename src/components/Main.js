@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { dispatcher } from "./../redux/actions/dispatchers";
 import { Switch, Route } from "react-router-dom";
 import Contacto from "./../views/Contacto";
 import Configuracion from "./../views/Configuracion";

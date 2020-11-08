@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { dispatcher } from "../redux/actions/dispatchers";
@@ -29,7 +29,11 @@ const EnConstruccion = ({ openModals }) => {
 
   return (
     <div className={classes.center}>
-      <img className={classes.img} src={"/underConst.jpg"} />
+      <img
+        className={classes.img}
+        alt="En Construcción"
+        src={"/underConst.jpg"}
+      />
       <div
         onClick={() => openModals({ type: "login" })}
         className={classes.hideButton}

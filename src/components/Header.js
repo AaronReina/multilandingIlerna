@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import ColorPickerButton from "./ColoPickerButton";
 import { connect } from "react-redux";
-import { dispatcher } from "./../redux/actions/dispatchers";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import {
@@ -18,7 +17,7 @@ import {
   List,
 } from "@material-ui/core";
 
-const Header = ({ colors, text, rol, config }) => {
+const Header = ({ colors, rol, config }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const useStyles = makeStyles({
     headerBoxTitle: {
@@ -39,6 +38,9 @@ const Header = ({ colors, text, rol, config }) => {
     },
     navColor: {
       background: colors[0].color,
+      height: "7vh",
+      display: "flex",
+      justifyContent: "center",
     },
     paper: {
       background: colors[3].color,

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Chip } from "@material-ui/core";
+import { Chip, Button } from "@material-ui/core";
+import ColorPickerButton from "./../components/ColoPickerButton";
 import {
   Facebook,
   Instagram,
@@ -13,7 +14,7 @@ import {
   PhoneIphone,
 } from "@material-ui/icons";
 import { dispatcher } from "./../redux/actions/dispatchers";
-const Contacto = ({ openModals, config }) => {
+const Contacto = ({ openModals, config, images, rol, colors }) => {
   const useStyles = makeStyles({
     hideButton: {
       width: "5vh",
@@ -23,78 +24,184 @@ const Contacto = ({ openModals, config }) => {
       left: "90%",
       cursor: "pointer",
     },
+    pointer: {
+      margin: "20px",
+      width: "130px",
+      cursor: "pointer",
+      color: colors[6].color,
+      borderColor: colors[6].color,
+    },
+    socialBox: {
+      display: "flex",
+      justifyContent: "space-around",
+      flexDirection: "row",
+      flexWrap: "wrap",
+    },
+    img: {
+      width: "100%",
+      maxHeight: "93vh",
+      height: "auto",
+    },
+    center: {
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    backColor: {
+      background: colors[4].color,
+      minHeight: "93vh",
+    },
   });
   const classes = useStyles();
   return (
-    <div>
-      {config.social.facebook && (
-        <Chip
-          label={config.social.facebook}
-          variant="outlined"
-          color="primary"
-          icon={<Facebook />}
-        />
+    <div className={classes.backColor}>
+      <img
+        className={classes.img}
+        alt="Contacto"
+        src={`data:image;base64,${images[12].image}`}
+      />
+      {rol && (
+        <div>
+          <Button
+            onClick={() => openModals({ type: "upload", id: 13 })}
+            size="small"
+            color="secondary"
+          >
+            Cambiar imagen
+          </Button>
+          <ColorPickerButton id="5" />
+        </div>
       )}
-      {config.social.instagram && (
-        <Chip
-          label={config.social.instagram}
-          variant="outlined"
-          color="primary"
-          icon={<Instagram />}
-        />
-      )}
-      {config.social.linkedin && (
-        <Chip
-          label={config.social.linkedin}
-          variant="outlined"
-          color="primary"
-          icon={<LinkedIn />}
-        />
-      )}
-      {config.social.pinterest && (
-        <Chip
-          label={config.social.pinterest}
-          variant="outlined"
-          color="primary"
-          icon={<Pinterest />}
-        />
-      )}
-      {config.social.twitter && (
-        <Chip
-          label={config.social.twitter}
-          variant="outlined"
-          color="primary"
-          icon={<Twitter />}
-        />
-      )}
+      <div>
+        <div className={classes.socialBox}>
+          {rol && <ColorPickerButton id="7" />}
+          {config.social.facebook && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.facebook}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="Facebook"
+                variant="outlined"
+                color="primary"
+                icon={<Facebook />}
+              />
+            </a>
+          )}
+          {config.social.instagram && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.instagram}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="Instagram"
+                variant="outlined"
+                color="primary"
+                icon={<Instagram />}
+              />
+            </a>
+          )}
+          {config.social.linkedin && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.linkedin}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="LinkedIn"
+                variant="outlined"
+                color="primary"
+                icon={<LinkedIn />}
+              />
+            </a>
+          )}
+          {config.social.pinterest && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.pinterest}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="Pinterest"
+                variant="outlined"
+                color="primary"
+                icon={<Pinterest />}
+              />
+            </a>
+          )}
+          {config.social.twitter && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.twitter}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="Twitter"
+                variant="outlined"
+                color="primary"
+                icon={<Twitter />}
+              />
+            </a>
+          )}
 
-      {config.social.youtube && (
-        <Chip
-          label={config.social.youtube}
-          variant="outlined"
-          color="primary"
-          icon={<YouTube />}
-        />
-      )}
+          {config.social.youtube && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.youtube}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="YouTube"
+                variant="outlined"
+                color="primary"
+                icon={<YouTube />}
+              />
+            </a>
+          )}
 
-      {config.social.email && (
-        <Chip
-          label={config.social.email}
-          variant="outlined"
-          color="primary"
-          icon={<Email />}
-        />
-      )}
+          {config.social.email && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={config.social.email}
+              style={{ textDecoration: "none" }}
+            >
+              <Chip
+                className={classes.pointer}
+                label="Email"
+                variant="outlined"
+                color="primary"
+                icon={<Email />}
+              />
+            </a>
+          )}
 
-      {config.social.telefono && (
-        <Chip
-          label={config.social.telefono}
-          variant="outlined"
-          color="primary"
-          icon={<PhoneIphone />}
-        />
-      )}
-
+          {config.social.telefono && (
+            <Chip
+              className={classes.pointer}
+              label={config.social.telefono}
+              variant="outlined"
+              color="primary"
+              icon={<PhoneIphone />}
+            />
+          )}
+        </div>
+      </div>
       <div
         onClick={() => openModals({ type: "login" })}
         className={classes.hideButton}
@@ -105,7 +212,8 @@ const Contacto = ({ openModals, config }) => {
 
 const mapStateToProps = (store) => ({
   config: store.data.config,
-  image: store.data.image,
+  images: store.data.images,
+  rol: store.auth.rol,
   colors: store.data.colors,
   text: store.data.text,
 });

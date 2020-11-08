@@ -49,6 +49,7 @@ const FullImageModal = ({ id, images, closeModals }) => {
         <Fade in={true}>
           <div className={classes.paper}>
             <img
+              alt="imagen"
               className={classes.img}
               src={`data:image;base64,${images[id - 1].image}`}
               title={images[id - 1].info}
