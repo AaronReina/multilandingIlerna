@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
-import ColorPickerButton from "./ColoPickerButton";
 import { connect } from "react-redux";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -16,6 +15,7 @@ import {
   Drawer,
   List,
 } from "@material-ui/core";
+import ChangeButton from "./ChangeButton";
 
 const Header = ({ colors, rol, config }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -113,7 +113,7 @@ const Header = ({ colors, rol, config }) => {
                     </ListItem>
                   )}
                 </List>
-                <ColorPickerButton id="4" />
+                <ChangeButton id="4" />
               </Drawer>
             </Fragment>
           </Hidden>
@@ -124,7 +124,7 @@ const Header = ({ colors, rol, config }) => {
               </Link>
             </Typography>
           </div>
-          <ColorPickerButton id="1" />
+          <ChangeButton id="1" />
           <Hidden smDown>
             <div className={classes.headerBoxRoutes}>
               {config?.galleryOn && (

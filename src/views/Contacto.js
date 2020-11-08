@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Chip, Button } from "@material-ui/core";
-import ColorPickerButton from "./../components/ColoPickerButton";
+import ChangeButton from "./../components/ChangeButton";
+import parse from "html-react-parser";
 import {
   Facebook,
   Instagram,
@@ -14,7 +15,7 @@ import {
   PhoneIphone,
 } from "@material-ui/icons";
 import { dispatcher } from "./../redux/actions/dispatchers";
-const Contacto = ({ openModals, config, images, rol, colors }) => {
+const Contacto = ({ openModals, config, images, rol, colors, text }) => {
   const useStyles = makeStyles({
     hideButton: {
       width: "5vh",
@@ -51,6 +52,7 @@ const Contacto = ({ openModals, config, images, rol, colors }) => {
     backColor: {
       background: colors[4].color,
       minHeight: "93vh",
+      color: config.contactText ? "white" : "black",
     },
   });
   const classes = useStyles();
@@ -70,12 +72,16 @@ const Contacto = ({ openModals, config, images, rol, colors }) => {
           >
             Cambiar imagen
           </Button>
-          <ColorPickerButton id="5" />
+          <ChangeButton id="5" />
         </div>
       )}
       <div>
+        {text[1]?.htmlText && parse(text[1].htmlText)}
+        <ChangeButton type="text" id="2" />
+      </div>
+      <div>
         <div className={classes.socialBox}>
-          {rol && <ColorPickerButton id="7" />}
+          <ChangeButton id="7" />
           {config.social.facebook && (
             <a
               target="_blank"

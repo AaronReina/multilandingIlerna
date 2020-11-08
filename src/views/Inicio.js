@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import { dispatcher } from "./../redux/actions/dispatchers";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
-import ColorPickerButton from "./../components/ColoPickerButton";
-const Inicio = ({ images, colors, text, rol, openModals }) => {
+import parse from "html-react-parser";
+
+import ChangeButton from "./../components/ChangeButton";
+const Inicio = ({ images, colors, text, rol, openModals, config }) => {
   const useStyles = makeStyles({
     img: {
       width: "100%",
@@ -20,6 +22,7 @@ const Inicio = ({ images, colors, text, rol, openModals }) => {
     backColor: {
       background: colors[5].color,
       minHeight: "93vh",
+      color: config.landingText ? "white" : "black",
     },
   });
   const classes = useStyles();
@@ -39,10 +42,13 @@ const Inicio = ({ images, colors, text, rol, openModals }) => {
           >
             Cambiar imagen
           </Button>
-          <ColorPickerButton id="6" />
+          <ChangeButton id="6" />
         </div>
       )}
-      <div></div>
+      <div>
+        {text[0]?.htmlText && parse(text[0].htmlText)}
+        <ChangeButton type="text" id="1" />
+      </div>
     </div>
   );
 };
@@ -52,6 +58,7 @@ const mapStateToProps = (store) => ({
   text: store.data.text,
   images: store.data.images,
   rol: store.auth.rol,
+  config: store.data.config,
 });
 const mapDispatch = dispatcher(["openModals"]);
 

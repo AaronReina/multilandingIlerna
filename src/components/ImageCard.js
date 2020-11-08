@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import ColorPickerButton from "./ColoPickerButton";
+import ChangeButton from "./ChangeButton";
 import { connect } from "react-redux";
 import { dispatcher } from "./../redux/actions/dispatchers";
 import Button from "@material-ui/core/Button";
@@ -59,7 +59,7 @@ const ImageCard = ({ rol, image, info, id, openModals, colors, config }) => {
           >
             Cambiar
           </Button>
-          <ColorPickerButton id="2" />
+          <ChangeButton id="2" />
         </CardActions>
       )}
     </Card>

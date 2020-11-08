@@ -53,6 +53,8 @@ const Contacto = ({ config, openModals, rol, getConfig }) => {
   const [menuText, setMenuText] = useState(config.menuText);
   const [cardText, setCardText] = useState(config.cardText);
   const [onConstruction, setOnConstruction] = useState(config.onConstruction);
+  const [contactText, setContactText] = useState(config.contactText);
+  const [landingText, setLandingText] = useState(config.landingText);
 
   const saveConfig = async () => {
     try {
@@ -65,6 +67,8 @@ const Contacto = ({ config, openModals, rol, getConfig }) => {
           menuText,
           cardText,
           onConstruction,
+          contactText,
+          landingText,
         },
       };
       const response = await post("changeConfig", dataCall);
@@ -134,7 +138,6 @@ const Contacto = ({ config, openModals, rol, getConfig }) => {
                   />
                 )}
               </div>
-
               <div>
                 <p>Color de los textos del menu </p>
                 <FormControlLabel
@@ -163,6 +166,36 @@ const Contacto = ({ config, openModals, rol, getConfig }) => {
                     />
                   }
                   label={cardText ? "Blanco" : "Negro"}
+                />
+              </div>
+              <div>
+                <p>Color de los textos de la zona principal </p>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={landingText}
+                      onChange={() => setLandingText(!landingText)}
+                      color="primary"
+                      name="card"
+                      inputProps={{ "aria-label": "primary checkbox" }}
+                    />
+                  }
+                  label={landingText ? "Blanco" : "Negro"}
+                />
+              </div>{" "}
+              <div>
+                <p>Color de los textos de la zona de contacto </p>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={contactText}
+                      onChange={() => setContactText(!contactText)}
+                      color="primary"
+                      name="card"
+                      inputProps={{ "aria-label": "primary checkbox" }}
+                    />
+                  }
+                  label={contactText ? "Blanco" : "Negro"}
                 />
               </div>
               <div className={classes.socialContainer}>

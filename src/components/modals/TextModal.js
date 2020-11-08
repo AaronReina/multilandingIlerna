@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { dispatcher } from "../../redux/actions/dispatchers";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Paper } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { post } from "../../services/calls";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-const ColorPickerModal = ({ text, id, closeModals }) => {
+const ColorPickerModal = ({ text, id, closeModals, getText }) => {
   const useStyles = makeStyles({
+    paper: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      flexDirection: "column",
+      borderRadius: "5px",
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    },
     button: {
       padding: "5px 25px",
       color: "white",
@@ -30,17 +41,18 @@ const ColorPickerModal = ({ text, id, closeModals }) => {
   });
   const classes = useStyles();
 
-  const [localText, setLocalText] = useState(text && text[id]?.htmlText);
+  const [localText, setLocalText] = useState(text && text[id - 1]?.htmlText);
 
   const saveText = async () => {
     try {
       const dataCall = {
-        id: id + 1,
+        id,
         htmlText: localText,
       };
       const response = await post("changeText", dataCall);
       if (response?.ok) {
         closeModals();
+        getText();
       }
     } catch (e) {
       console.log(e);
@@ -52,7 +64,7 @@ const ColorPickerModal = ({ text, id, closeModals }) => {
   };
 
   return (
-    <div>
+    <Paper className={classes.paper}>
       <div className={classes.cancelBox}>
         <Close className={classes.cancel} onClick={() => cancel()} />
       </div>
@@ -61,10 +73,26 @@ const ColorPickerModal = ({ text, id, closeModals }) => {
         <CKEditor
           editor={ClassicEditor}
           data={localText}
-          onReady={(editor) => {
-            // You can store the "editor" and use when it is needed.
-            console.log("Editor is ready to use!", editor);
+          config={{
+            toolbar: [
+              "heading",
+              "|",
+              "bold",
+              "italic",
+              "blockQuote",
+              "link",
+              "numberedList",
+              "bulletedList",
+              "insertTable",
+              "tableColumn",
+              "tableRow",
+              "mergeTableCells",
+              "|",
+              "undo",
+              "redo",
+            ],
           }}
+          onReady={(editor) => {}}
           onChange={(event, editor) => {
             const data = editor.getData();
             setLocalText(data);
@@ -81,7 +109,7 @@ const ColorPickerModal = ({ text, id, closeModals }) => {
       <button className={classes.button} onClick={() => saveText()}>
         Guardar
       </button>
-    </div>
+    </Paper>
   );
 };
 
@@ -89,6 +117,6 @@ const mapStateToProps = (store) => ({
   text: store.data.text,
 });
 
-const mapDispatch = dispatcher(["addColor", "closeModals"]);
+const mapDispatch = dispatcher(["closeModals", "getText"]);
 
 export default connect(mapStateToProps, mapDispatch)(ColorPickerModal);

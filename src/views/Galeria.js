@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ImageCard from "../components/ImageCard";
-import ColorPickerButton from "../components/ColoPickerButton";
+import ChangeButton from "../components/ChangeButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { dispatcher } from "./../redux/actions/dispatchers";
 const Galeria = ({ images, openModals, colors, config }) => {
@@ -25,7 +25,7 @@ const Galeria = ({ images, openModals, colors, config }) => {
   return (
     <div className={classes.container}>
       <div className={classes.pickerContainer}>
-        <ColorPickerButton id="3" />
+        <ChangeButton id="3" />
       </div>
 
       <div className={classes.cardBox}>
