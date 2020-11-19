@@ -26,11 +26,14 @@ const Contacto = ({ openModals, config, images, rol, colors, text }) => {
       cursor: "pointer",
     },
     pointer: {
+      paddingLeft: "8px",
       margin: "20px",
       width: "130px",
       cursor: "pointer",
       color: colors[6].color,
       borderColor: colors[6].color,
+      display: "flex",
+      justifyContent: "flex-start",
     },
     socialBox: {
       display: "flex",
@@ -83,8 +86,9 @@ const Contacto = ({ openModals, config, images, rol, colors, text }) => {
         <ChangeButton type="text" id="2" />
       </div>
       <div>
+        <ChangeButton id="7" />
+
         <div className={classes.socialBox}>
-          <ChangeButton id="7" />
           {config.social.facebook && (
             <a
               target="_blank"
