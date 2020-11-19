@@ -24,6 +24,9 @@ const Inicio = ({ images, colors, text, rol, openModals, config }) => {
       minHeight: "93vh",
       color: config.landingText ? "white" : "black",
     },
+    padding: {
+      padding: "15px",
+    },
   });
   const classes = useStyles();
   return (
@@ -45,7 +48,7 @@ const Inicio = ({ images, colors, text, rol, openModals, config }) => {
           <ChangeButton id="6" />
         </div>
       )}
-      <div>
+      <div className={classes.padding}>
         {text[0]?.htmlText && parse(text[0].htmlText)}
         <ChangeButton type="text" id="1" />
       </div>

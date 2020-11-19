@@ -54,6 +54,9 @@ const Contacto = ({ openModals, config, images, rol, colors, text }) => {
       minHeight: "93vh",
       color: config.contactText ? "white" : "black",
     },
+    padding: {
+      padding: "15px",
+    },
   });
   const classes = useStyles();
   return (
@@ -75,7 +78,7 @@ const Contacto = ({ openModals, config, images, rol, colors, text }) => {
           <ChangeButton id="5" />
         </div>
       )}
-      <div>
+      <div className={classes.padding}>
         {text[1]?.htmlText && parse(text[1].htmlText)}
         <ChangeButton type="text" id="2" />
       </div>
